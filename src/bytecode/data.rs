@@ -2,7 +2,7 @@
 pub struct Data {
     pub val : Type
 }
-#[derive(Debug)]
+#[derive(Debug,)]
 pub enum Type {
     F64(f64),
     F32(f32),
@@ -18,3 +18,4 @@ impl Data {
         Self { val : typ  }
     } 
 }
+
