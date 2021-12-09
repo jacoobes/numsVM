@@ -2,7 +2,7 @@
 pub struct Data {
     pub val : Type
 }
-#[derive(Debug,)]
+#[derive(Debug, Clone, Copy)]
 pub enum Type {
     F64(f64),
     F32(f32),
@@ -19,3 +19,12 @@ impl Data {
     } 
 }
 
+impl Copy for Data {
+
+}
+
+impl Clone for Data {
+    fn clone(&self) -> Self {
+        Self { val: self.val.clone() }
+    }
+}

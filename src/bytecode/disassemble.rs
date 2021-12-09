@@ -19,7 +19,7 @@ pub fn disassemble_instruction(chunk: &Chunk, offset: &mut usize) -> usize {
 
     match instruction {
        0x00 => {
-        simple_instruction(chunk,  offset, HALT)
+        simple_instruction( offset, HALT)
        } 
        0x01 => {
         const_instruction(chunk, offset, LOAD_CONST)
@@ -30,7 +30,7 @@ pub fn disassemble_instruction(chunk: &Chunk, offset: &mut usize) -> usize {
     }
 }
 
-fn simple_instruction (chunk : &Chunk, offset: &mut usize, instruction: OpCode) -> usize {
+fn simple_instruction ( offset: &mut usize, instruction: OpCode) -> usize {
     println!("{:#04x}{:>20}", Chunk::op_to_u8(&instruction),   format!("{:?}", instruction));    
     *offset + 1
 }

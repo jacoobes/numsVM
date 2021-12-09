@@ -1,1 +1,1 @@
-pub struct vm;
+pub mod vm;

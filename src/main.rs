@@ -1,13 +1,19 @@
+use bytecode::{chunk::Chunk, data::{Type, Data}};
+use vm::vm::VM;
+use crate::bytecode::op_code::OpCode::{*};
 pub mod bytecode;
 pub mod vm;
 mod tests;
 
-use bytecode::disassemble::{self, disassemble_chunk};
 
-use crate::bytecode::data::{Data, Type};
 
-use crate::bytecode::op_code::OpCode::{*};
 fn main() {
-    let mut chunk = bytecode::chunk::Chunk::new();
+    let mut chunk = Chunk::new();
+        let location_of_const = chunk.add_const(Data::new(Type::F64(1.2)));
+        chunk.write(&LOAD_CONST);
+        chunk.write_const(location_of_const);
+        chunk.write(&HALT);
+    println!("{:?}", chunk);
+    VM::new(chunk).exec()
 
 }
