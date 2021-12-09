@@ -1,10 +1,8 @@
-#[derive(Debug, Clone, Copy,)]
+#[derive(Debug, Clone, Copy)]
 #[allow(non_camel_case_types)]
 #[repr(u8)]
 pub enum OpCode {
-    HALT       = 0x00,
-    LOAD_CONST = 0x01
+    HALT = 0x00,
+    LOAD_CONST = 0x01,
+    NEGATE = 0x02,
 }
-
-
-
