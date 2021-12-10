@@ -2,6 +2,8 @@ use std::slice::Iter;
 
 use crate::bytecode::data::Data;
 
+///abstraction over a vec of data values
+/// supports basic pop, push, length, and iterator methods
 pub struct Stack {
   stack : Vec<Data>  
 }
