@@ -15,4 +15,5 @@ numsVM is a simple stack based virtual machine implemented in [Rust](https://www
 - [ ]  optimizing instructions / more instructions
 - [ ]  better error handling, line reporting
 - [ ]  stack frames (when functions come)
+- [ ]  overall cleanliness of code base
 - [ ]  much more!
