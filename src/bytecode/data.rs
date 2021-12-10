@@ -56,7 +56,7 @@ impl std::fmt::Debug for Data {
 
 ///
 /// This is just putting some crap together to make bin ops work,
-///  There's probably a macro that's better suited for this.
+///  There's probably a macro / more optimized way to do this
 /// 
 
 impl ops::Add<Data> for Data {

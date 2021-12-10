@@ -2,25 +2,25 @@ use crate::bytecode::{chunk::Chunk};
 
 use super::stack::Stack;
 
-pub struct VM {
+pub struct NumsVM {
     bytecode: Chunk,
     stack: Stack,
 }
 
-enum VMState {
+pub enum VMState {
     Completed,
     Panic,
 }
 
-impl VM {
-    pub fn new(bytecode: Chunk) -> VM {
-        VM {
+impl NumsVM {
+    pub fn new(bytecode: Chunk) -> NumsVM {
+        NumsVM {
             bytecode,
             stack: Stack::new(),
         }
     }
 
-    fn eval(&mut self) -> VMState {
+    pub fn eval(&mut self, print_chunk: bool) -> VMState {
         let mut instructions = self.bytecode.instructions.iter().peekable();
         while let Some(&ip) = instructions.peek() {
             match ip {
@@ -86,17 +86,8 @@ impl VM {
                 }
             }
         }
+        if print_chunk { self.debug() }
         return VMState::Panic;
-    }
-
-    pub fn exec(&mut self) {
-        //tokenize
-
-        //parse
-
-
-        self.eval();
-        self.debug();
     }
 
     pub fn debug(&mut self) {
