@@ -1,6 +1,5 @@
 use super::{
     chunk::Chunk,
-    data::{Data, Type::*},
     op_code::OpCode,
 };
 use crate::bytecode::op_code::OpCode::*;
@@ -21,8 +20,14 @@ pub fn disassemble_instruction(chunk: &Chunk, offset: &mut usize) -> usize {
     match instruction {
         0x00 => simple_instruction(offset, HALT),
         0x01 => const_instruction(chunk, offset, LOAD_CONST),
+        0x02 => simple_instruction(offset, NEGATE),
+        0x03 => simple_instruction(offset, ADD),
+        0x04 => simple_instruction(offset, SUB),
+        0x05 => simple_instruction(offset, MUL),
+        0x06 => simple_instruction(offset, DIV),
         _ => {
             panic!("unknown opcode!")
+
         }
     }
 }
@@ -43,19 +48,6 @@ fn const_instruction(chunk: &Chunk, offset: &mut usize, instruction: OpCode) -> 
         format!("{:?}", instruction)
     );
     print!("{:>10}", &loc_of_const);
-    print_const(&chunk.constants[loc_of_const]);
-    println!();
+    println!("{:?}",chunk.constants[loc_of_const]);
     *offset + 2
-}
-/// need to refactor
-fn print_const(data: &Data) {
-    match &data.val {
-        F64(v) => print!("({:>3})", v),
-        F32(v) => print!("({:>3})", v),
-        I32(v) => print!("({:>3})", v),
-        I64(v) => print!("({:>3})", v),
-        Bool(v) => print!("({:>3})", v),
-        String(v) => print!("({:>3})", v),
-        Char(v) => print!("({:>3})", v),
-    }
 }
