@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "VM"
+name = "nums_vm"
 version = "0.1.0"
