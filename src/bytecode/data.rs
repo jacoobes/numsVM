@@ -1,17 +1,19 @@
 use std::ops;
 
+use smol_str::SmolStr;
+
 use crate::Type::*;
 pub struct Data {
     pub val : Type
 }
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 pub enum Type {
     F64(f64),
     F32(f32),
     I32(i32),
     I64(i64),
     Bool(bool),
-    String(&'static str),
+    String(SmolStr),
     Char(char)
 }
 
@@ -21,28 +23,24 @@ impl Data {
     }
     pub fn negate(&self) -> Result<Self, std::string::String> {
         match self.val {
-            Type::F64(f) => Ok(Self { val: Type::F64(-f) }),
-            Type::F32(f) => Ok(Self { val: Type::F32(-f) }),
-            Type::I32(f) => Ok(Self { val: Type::I32(-f) }),
-            Type::I64(f) => Ok(Self { val: Type::I64(-f) }),
-            Type::Bool(_) => Err(std::string::String::from("Cannot negate a boolean")),
-            Type::String(_) => Err(std::string::String::from("Cannot negate a string")),
-            Type::Char(_) => Err(std::string::String::from("Cannot negate a char")),
+            F64(f) => Ok(Self { val: Type::F64(-f) }),
+            F32(f) => Ok(Self { val: Type::F32(-f) }),
+            I32(f) => Ok(Self { val: Type::I32(-f) }),
+            I64(f) => Ok(Self { val: Type::I64(-f) }),
+            Bool(_) => Err(std::string::String::from("Cannot negate a boolean")),
+            String(_) => Err(std::string::String::from("Cannot negate a string")),
+            Char(_) => Err(std::string::String::from("Cannot negate a char")),
         }
     }
-}
-
-impl Copy for Data {}
-
-impl Clone for Data {
-    fn clone(&self) -> Self {
-        Self { val: self.val.clone() }
+    pub fn clone(&self) -> Self {
+         Self { val: self.val.clone() }
     }
 }
+
 
 impl std::fmt::Debug for Data {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self.val {
+        match &self.val {
             F64(v) =>     write!(f,"({:>3} f64)", v),
             F32(v) =>     write!(f,"({:>3} f32)", v),
             I32(v) =>     write!(f,"({:>3} i32)", v),

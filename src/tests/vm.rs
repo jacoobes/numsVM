@@ -1,6 +1,7 @@
 
 #[cfg(test)]
 mod test {
+
     use crate::bytecode::chunk::Chunk;
     use crate::bytecode::data::Data;
     use crate::bytecode::data::Type;
@@ -14,13 +15,19 @@ fn load_const_chunk(data: Data) -> Chunk {
     chunk.write(&LOAD_CONST);
     chunk.write_const(location_of_const);
     chunk
+}
+fn create_vm<'a> (chunk: Chunk) -> () {
+    match NumsVM::new(chunk).eval(true) {
+        Ok(_) => (),
+        Err(e) => panic!("{}", &e),
+    }
+    
 }    
 #[test]
 fn iter () {
 
    let chunk = load_const_chunk(Data::new(Type::F64(1.3)));
-
-   NumsVM::new(chunk).eval(true);
+    create_vm(chunk);
 }
 #[test]
 fn add () {
@@ -30,7 +37,6 @@ fn add () {
     chunk.write(&LOAD_CONST);
     chunk.write(&ADD);
     disassemble_chunk(&chunk);    
-    NumsVM::new(chunk).eval(true);
 }
 #[test]
 #[should_panic(expected = "mismatch type adding")]
@@ -40,8 +46,8 @@ fn add_panic_mismatch_type() {
     chunk.write_const(loc_of_const2);
     chunk.write(&LOAD_CONST);
     chunk.write(&ADD);
-    disassemble_chunk(&chunk);    
-    NumsVM::new(chunk).eval(true);
+    create_vm(chunk);
+    
 }
 #[test]
 fn sub () {
@@ -51,7 +57,7 @@ fn sub () {
     chunk.write(&LOAD_CONST);
     chunk.write(&SUB);
     disassemble_chunk(&chunk);    
-    NumsVM::new(chunk).eval(true);
+    create_vm(chunk);
 }
 #[test]
 fn mult () {
@@ -65,7 +71,7 @@ fn mult () {
         chunk.write_const(loc_const2);
         chunk.write(&ADD);
     disassemble_chunk(&chunk);    
-    NumsVM::new(chunk).eval(true);
+    create_vm(chunk);
 }
 #[test]
 fn div() {
@@ -79,7 +85,7 @@ fn div() {
         chunk.write_const(loc_const2);
         chunk.write(&ADD);
     disassemble_chunk(&chunk);    
-    NumsVM::new(chunk).eval(true);
+    create_vm(chunk);
 }
 
 

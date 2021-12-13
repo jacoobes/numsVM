@@ -9,3 +9,4 @@ name = "nums_vm"
 path = "src/lib.rs"
 
 [dependencies]
+smol_str = "0.1.21"

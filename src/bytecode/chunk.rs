@@ -1,4 +1,4 @@
-use super::{data::Data, op_code::OpCode};
+use super::{data::Data, op_code::OpCode::{self, *}};
 #[derive(Debug)]
 pub struct Chunk {
     pub instructions: Vec<u8>,
@@ -28,4 +28,17 @@ impl Chunk {
         self.constants.push(val);
         (self.constants.len() - 1) as u8
     }
+}
+/// higher order abstractions of previous implementations
+impl Chunk {
+    pub fn emit_const(&mut self, data : Data) {
+        let loc_of_const =  self.add_const( data);
+        self.write(&LOAD_CONST);
+        self.write_const(loc_of_const)
+     }
+     
+     pub fn emit_op(&mut self, code: &OpCode) {
+         self.write(&code);
+     }
+
 }
